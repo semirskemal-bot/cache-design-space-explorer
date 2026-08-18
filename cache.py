@@ -1,10 +1,19 @@
 class Cache:
-    def __init__(self, cache_size, block_size, associativity):
+    def __init__(
+        self,
+        cache_size,
+        block_size,
+        associativity,
+        hit_time=1,
+        miss_penalty=50
+    ):
         self.cache_size = cache_size
         self.block_size = block_size
         self.associativity = associativity
         self.hits = 0
         self.misses = 0
+        self.hit_time = hit_time
+        self.miss_penalty = miss_penalty
 
         self.num_sets = cache_size // (block_size * associativity)
         self.sets = [[] for _ in range(self.num_sets)]
@@ -45,6 +54,17 @@ class Cache:
             return 0
 
         return self.hits/total_accesses
+    
+
+    def get_amat(self):
+        total_accesses = self.hits + self.misses
+
+        if total_accesses == 0:
+            return 0
+
+        miss_rate = self.misses / total_accesses
+
+        return self.hit_time + (miss_rate * self.miss_penalty)
 
     def get_miss_rate(self):
         total_accesses = self.hits+self.misses

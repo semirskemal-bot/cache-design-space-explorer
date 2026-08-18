@@ -14,26 +14,29 @@ workload_names = [
     "repeated",
     "random",
     "conflict"
+    
 ]
 
-average_hit_rates = []
+average_amats = []
 
 for workload in workload_names:
-    rates = []
+    amats = []
 
     for row in results:
         if row["workload"] == workload:
-            rates.append(float(row["hit_rate"]))
+            amats.append(float(row["amat"]))
 
-    average = sum(rates) / len(rates)
-    average_hit_rates.append(average)
+    if len(amats) > 0:
+        average_amat = sum(amats) / len(amats)
+        average_amats.append(average_amat)
+    else:
+        print("No results found for:", workload)
 
-plt.bar(workload_names, average_hit_rates)
+plt.bar(workload_names, average_amats)
 
 plt.xlabel("Memory Workload")
-plt.ylabel("Average Hit Rate")
-plt.title("Cache Performance Across Memory Access Patterns")
-plt.ylim(0, 1)
+plt.ylabel("Average Memory Access Time (ns)")
+plt.title("AMAT Across Memory Workloads")
 
-plt.savefig("workload_comparison.png")
+plt.savefig("amat_comparison.png")
 plt.show()

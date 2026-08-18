@@ -13,7 +13,8 @@ def save_results(results, filename):
                 "associativity",
                 "hits",
                 "misses",
-                "hit_rate"
+                "hit_rate",
+                "amat"
             ]
         )
 
@@ -34,5 +35,6 @@ def run_experiment(addresses, cache_size, block_size, associativity, workload_na
         "hits": cache.hits,
         "misses": cache.misses,
         "hit_rate": cache.get_hit_rate(),
-        "workload": workload_name
+        "workload": workload_name,
+        "amat": cache.get_amat()
     }
